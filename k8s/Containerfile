@@ -1,0 +1,82 @@
+# Base
+FROM containers.chewed-k8s.net/docker_hub_cache/library/node:22-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+RUN apk add --no-cache libc6-compat openssl
+RUN corepack install -g pnpm@latest
+
+# Dependencies
+FROM base AS deps
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm add sharp
+
+## Copy the files
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+RUN SKIP_ENV_VALIDATION=1 pnpm run build
+
+# Runner
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+## Set Args
+ARG GIT_BUILD
+ARG GIT_VERSION
+ARG SERVICE_NAME
+
+ARG KEYCLOAK_SECRET
+ARG KEYCLOAK_ISSUER
+ARG KEYCLOAK_ID
+
+ARG UPLOADTHING_TOKEN
+
+ARG NEXTAUTH_URL
+ARG NEXTAUTH_SECRET
+
+ARG STRIPE_KEY
+ARG STRIPE_SECRET
+
+## Set Envs for build
+ENV COMMIT_HASH=$GIT_BUILD
+ENV GIT_TAG=$GIT_VERSION
+ENV SERVICE_NAME=$SERVICE_NAME
+
+ENV KEYCLOAK_SECRET=$KEYCLOAK_SECRET
+ENV KEYCLOAK_ISSUER=$KEYCLOAK_ISSUER
+ENV KEYCLOAK_ID=$KEYCLOAK_ID
+
+ENV NEXT_PUBLIC_FLAGS_PROJECT=ce70ace8-9516-4c18-ae62-1f9b1b1d2b33
+ENV NEXT_PUBLIC_FLAGS_AGENT=281f691b-f932-4d50-8fce-4bdf037fe6cb
+ENV NEXT_PUBLIC_FLAGS_ENVIRONMENT=cd76e6a2-95da-4b5d-b129-b6f3b26b2ebf
+
+ENV UPLOADTHING_TOKEN=$UPLOADTHING_TOKEN
+
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
+ENV NEXTAUTH_URL=$NEXTAUTH_URL
+ENV NEXTAUTH_URL_INTERNAL=$NEXTAUTH_URL_INTERNAL
+
+ENV STRIPE_KEY=$STRIPE_KEY
+ENV STRIPE_SECRET=$STRIPE_SECRET
+
+USER nextjs
+
+EXPOSE 3000
+ENV NODE_ENV=production
+ENV PORT=3000
+CMD ["node", "server.js"]
