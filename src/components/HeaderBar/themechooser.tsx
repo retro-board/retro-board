@@ -9,6 +9,8 @@ export function ThemeChooser() {
     const {setTheme} = useTheme()
     const {is} = useFlags()
 
+    console.log("is theme chooser enabled?", is("theme chooser")?.enabled())
+
     if (!is("theme chooser")?.enabled()) {
         return null
     }
@@ -20,10 +22,10 @@ export function ThemeChooser() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align={"end"}>
                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => setTheme("light")}>
-                    <SunIcon className={"h-6 w-6"} />
+                    <SunIcon className={"h-6 w-6"} /> Light
                 </DropdownMenuItem>
                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => setTheme("dark")}>
-                    <MoonIcon className={"h-6 w-6"} />
+                    <MoonIcon className={"h-6 w-6"} /> Dark
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

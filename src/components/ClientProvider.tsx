@@ -12,6 +12,8 @@ export default function ClientProvider({ children, flagConfig }: { children: Rea
     const {theme} = useTheme();
     const [queryClient] = useState(() => new QueryClient());
 
+    console.log("flagsConfig", flagConfig)
+
     return (
         <ThemeProvider attribute={"class"} defaultTheme={theme} enableSystem={true}>
             <QueryClientProvider client={queryClient}>
