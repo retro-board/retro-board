@@ -7,6 +7,8 @@ import { TRPCReactProvider } from "~/trpc/react";
 import ClientProvider from "~/components/ClientProvider";
 import {NextSSRPlugin} from "@uploadthing/react/next-ssr-plugin";
 import {extractRouterConfig} from "uploadthing/server";
+import {fileRouter} from "~/app/api/uploadthing/core";
+import HeaderBar from "~/components/HeaderBar";
 
 export const metadata: Metadata = {
   title: "Retro-Board.it",
@@ -26,7 +28,12 @@ export default function RootLayout({
         <ClientProvider>
             <div className={"relative flex min-h-screen flex-col bg-muted/40"}>
                 <NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />
-                {children}
+                <div className={"flex flex-col sm:py-4 size-full"}>
+                    <HeaderBar />
+                    <main className={"flex-1 size-full p-4"} suppressHydrationWarning={true}>
+                        {children}
+                    </main>
+                </div>
             </div>
         </ClientProvider>
       </body>
