@@ -9,8 +9,6 @@ export function ThemeChooser() {
     const {setTheme} = useTheme()
     const {is} = useFlags()
 
-    console.log("is theme chooser enabled?", is("theme chooser")?.enabled())
-
     if (!is("theme chooser")?.enabled()) {
         return null
     }

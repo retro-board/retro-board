@@ -7,12 +7,11 @@ import {FlagsProvider} from "@flags-gg/react-library";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {TooltipProvider} from "~/components/ui/tooltip";
 import {TRPCReactProvider} from "~/trpc/react";
+import {SessionProvider} from "next-auth/react";
 
 export default function ClientProvider({ children, flagConfig }: { children: ReactNode, flagConfig?: typeof flagsConfig }) {
     const {theme} = useTheme();
     const [queryClient] = useState(() => new QueryClient());
-
-    console.log("flagsConfig", flagConfig)
 
     return (
         <ThemeProvider attribute={"class"} defaultTheme={theme} enableSystem={true}>
@@ -20,7 +19,9 @@ export default function ClientProvider({ children, flagConfig }: { children: Rea
                 <FlagsProvider options={flagConfig ?? flagsConfig}>
                     <TooltipProvider>
                         <TRPCReactProvider>
-                            {children}
+                            <SessionProvider>
+                                {children}
+                            </SessionProvider>
                         </TRPCReactProvider>
                     </TooltipProvider>
                 </FlagsProvider>

@@ -31,13 +31,13 @@ export const authConfig: NextAuthOptions = {
       }
       return token;
     },
-    session: ({ session, token }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: token.sub,
-        access_token: token.access_token,
-      },
-    }),
+    session: ({ session }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        },
+      }
+    },
   },
 };
