@@ -6,7 +6,6 @@ export default tseslint.config(
     ...tseslint.configs.recommended,
 )
 
-/** @type {import("eslint").Linter.Config} */
 const config = {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
