@@ -30,7 +30,7 @@ jobs:
         with:
           upload-result: true
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_362254779 }}
   update_release_draft:
     runs-on: ubuntu-latest
     permissions:
