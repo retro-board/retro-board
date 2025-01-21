@@ -41,7 +41,7 @@ jobs:
         with:
           upload-result: true
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_362254779 }}
   automerge:
     runs-on: ubuntu-latest
     permissions:
