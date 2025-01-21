@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import {type DefaultSession, NextAuthOptions} from "next-auth";
+import {type DefaultSession, NextAuthConfig} from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 
 import { db } from "~/server/db";
@@ -14,7 +14,7 @@ declare module "next-auth" {
   }
 }
 
-export const authConfig: NextAuthOptions = {
+export const authConfig: NextAuthConfig = {
   providers: [
     KeycloakProvider({
       clientId: env.KEYCLOAK_ID,
