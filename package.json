@@ -59,7 +59,7 @@
     "@testcontainers/mongodb": "^10.16.0",
     "@types/eslint": "^9.6.1",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.10.7",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
