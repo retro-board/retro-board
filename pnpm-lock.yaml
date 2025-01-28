@@ -106,8 +106,8 @@ importers:
         specifier: ^9.17.0
         version: 9.17.0
       '@next/eslint-plugin-next':
-        specifier: ^15.1.5
-        version: 15.1.5
+        specifier: ^15.1.6
+        version: 15.1.6
       '@testcontainers/mongodb':
         specifier: ^10.16.0
         version: 10.16.0
@@ -530,9 +530,6 @@ packages:
 
   '@next/env@15.1.6':
     resolution: {integrity: sha512-d9AFQVPEYNr+aqokIiPLNK/MTyt3DWa/dpKveiAaVccUadFbhFEvY6FXYX2LJO2Hv7PHnLBu2oWwB4uBuHjr/w==}
-
-  '@next/eslint-plugin-next@15.1.5':
-    resolution: {integrity: sha512-3cCrXBybsqe94UxD6DBQCYCCiP9YohBMgZ5IzzPYHmPzj8oqNlhBii5b6o1HDDaRHdz2pVnSsAROCtrczy8O0g==}
 
   '@next/eslint-plugin-next@15.1.6':
     resolution: {integrity: sha512-+slMxhTgILUntZDGNgsKEYHUvpn72WP1YTlkmEhS51vnVd7S9jEEy0n9YAMcI21vUG4akTw9voWH02lrClt/yw==}
@@ -3478,10 +3475,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
 
   '@next/env@15.1.6': {}
-
-  '@next/eslint-plugin-next@15.1.5':
-    dependencies:
-      fast-glob: 3.3.1
 
   '@next/eslint-plugin-next@15.1.6':
     dependencies:
